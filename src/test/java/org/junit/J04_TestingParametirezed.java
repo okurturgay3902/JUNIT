@@ -2,6 +2,7 @@ package org.junit;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -33,8 +34,37 @@ public class J04_TestingParametirezed {
     //COKLU SART --> Her parametre elemanı KEY VALUE ikili ile test method'unda run edilir.
     @ParameterizedTest
     //CSV : comma-separated values --> virgülle ayrılmış degerler
-    @CsvSource(value= {"yıldız,YILDIZ","suleyman,SULEYMAN","omer,OMER","kursat,KURSAT"})
+    @CsvSource(value= {"yıldız,YILDIZ","suleyman,SULEYMAN","omer,OMER","kursat,KURSAT"}) //@CsvSource synteax
     void testBykHrfCvr(String beklenenBYKhrf, String isim){
         assertEquals(beklenenBYKhrf.toUpperCase(),isim);
     }
+
+
+    @ParameterizedTest(name="Expected(BUYUKHARF):{0},actual(cevirilecek),{1}")
+    //CSV : comma-separated values --> virgülle ayrılmış degerler
+    //@CsvFileSource belirli bir dosyadan datalari okutarak test icin parametre olarak kullanilir
+    //@CsvFileSource --> SRC/TEST/RESOURCE klosoru altina konumlanmis dosyaya ulasilir
+    @CsvFileSource(resources = "/data.csv",numLinesToSkip = 1)
+        //numLinesToSkip = 1 : 1. satiri atla digerlerini test met run eder
+        //numLinesToSkip = a --> a: start line dan itibaren kalansatirlara parametre olarak method'da run edilir
+
+    void bykHrfCvrFile(String cevirilecek, String bykHrf){
+        assertEquals(bykHrf, cevirilecek.toUpperCase());
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
